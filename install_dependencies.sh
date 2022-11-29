@@ -19,7 +19,7 @@
 # or conanfile.py is updated.
 #
 
-set -e
+source ./sdk/.scripts/common.sh
 
 function print_help() {
   echo "Install dependencies
@@ -38,6 +38,7 @@ Arguments:
 
 BUILD_VARIANT="release"
 BUILD_ARCH=$(arch)
+HOST_ARCH=${BUILD_ARCH}
 WHICH_DEPS_TO_BUILD="missing"
 
 while [[ $# -gt 0 ]]; do
@@ -52,6 +53,17 @@ while [[ $# -gt 0 ]]; do
       ;;
     --build-all-deps)
       WHICH_DEPS_TO_BUILD="*"
+      shift
+      ;;
+    -x|--cross)
+      HOST_ARCH=$( get_valid_cross_compile_architecute "$2" )
+
+      if [ "$?" -eq 1 ]; then
+        echo "Invalid cross-compile architecture '$2'!"
+        exit 1
+      fi
+
+      shift
       shift
       ;;
     -h|--help)
@@ -70,9 +82,11 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-echo "Build variant ${BUILD_VARIANT}"
-echo "Build arch    ${BUILD_ARCH}"
-echo "Building deps ${WHICH_DEPS_TO_BUILD}"
+echo "Conan version      "`conan --version`
+echo "Build variant      ${BUILD_VARIANT}"
+echo "Build arch         ${BUILD_ARCH}"
+echo "Host arch          ${HOST_ARCH}"
+echo "Building deps      ${WHICH_DEPS_TO_BUILD}"
 
 mkdir -p build && cd build
 

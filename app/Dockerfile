@@ -34,7 +34,7 @@ COPY . /app
 RUN --mount=type=cache,target=/root/.conan
 
 RUN cd /app && \
-    ./install_dependencies.sh -r && \
+    ./install_dependencies.sh && \
     ./build.sh -r -t app --static
 
 RUN strip /app/build/bin/app
