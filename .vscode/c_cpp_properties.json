@@ -4,7 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/app/src/**",
-                "${workspaceFolder}/app/vehicle_model/include/**",
+                "${workspaceFolder}/build/gens/**",
                 "${workspaceFolder}/sdk/sdk/include/**"
             ],
             "defines": [ ],

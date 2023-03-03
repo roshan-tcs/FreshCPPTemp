@@ -15,7 +15,6 @@
 include_directories(
     ${CMAKE_BINARY_DIR}/gens
     ${PROJECT_SOURCE_DIR}/sdk/sdk/include
-    ${PROJECT_SOURCE_DIR}/app/vehicle_model/include
 )
 
 add_subdirectory(src)
